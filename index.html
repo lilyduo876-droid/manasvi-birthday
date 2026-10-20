@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFF6F1">
+<meta name="description" content="A little birthday surprise for Manasvi.">
+<title>Happy Birthday, Manasvi ♡</title>
+<style>
+/* =========================================================
+   TOKENS
+   ========================================================= */
+:root{
+  --cream:      #FFF6F1;
+  --paper:      #FFFBF7;
+  --pink-50:    #FFF1F5;
+  --pink-100:   #FFE4EC;
+  --pink-200:   #FBCBD9;
+  --pink-300:   #F4AFC3;
+  --rose:       #C9768F;
+  --rose-dark:  #A85A73;
+  --ink:        #4B3038;
+  --ink-soft:   #6E4E57;
+  --line:       #EBC9D4;
+  --shadow:     0 12px 30px -14px rgba(168,90,115,.42);
+  --shadow-sm:  0 5px 16px -8px rgba(168,90,115,.45);
+  --serif: "Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
+  --sans: "Avenir Next",Avenir,"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+}
+
+/* =========================================================
+   BASE
+   ========================================================= */
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  color:var(--ink);
+  background-color:var(--cream);
+  background-image:
+    radial-gradient(1100px 560px at 50% -200px, #FFEAF1 0%, rgba(255,234,241,0) 72%),
+    radial-gradient(rgba(201,118,143,.085) 1px, transparent 1px);
+  background-size:100% 100%, 22px 22px;
+  background-repeat:no-repeat, repeat;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+img,svg{ max-width:100%; }
+p{ margin:0 0 1em; }
+p:last-child{ margin-bottom:0; }
+
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%);
+  white-space:nowrap; border:0;
+}
+
+:focus-visible{
+  outline:3px solid rgba(201,118,143,.62);
+  outline-offset:3px;
+  border-radius:6px;
+}
+
+/* =========================================================
+   SHELL
+   ========================================================= */
+.app{
+  width:100%;
+  max-width:720px;
+  margin:0 auto;
+  min-height:100vh;
+  min-height:100svh;
+  padding:14px clamp(16px,5vw,32px) 18px;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ---------- top bar ---------- */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:4px 0 12px;
+  flex:0 0 auto;
+}
+.brand{
+  margin:0;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:.95rem;
+  color:var(--rose);
+  letter-spacing:.01em;
+}
+.brand__heart{ color:var(--pink-300); font-style:normal; }
+
+.music-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:42px;
+  padding:8px 15px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.72);
+  color:var(--rose-dark);
+  font-family:var(--sans);
+  font-size:.8125rem;
+  font-weight:600;
+  letter-spacing:.02em;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:background-color .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
+}
+.music-btn:hover{ background:#fff; border-color:var(--pink-300); }
+.music-btn:active{ transform:scale(.97); }
+.music-btn.is-playing{
+  background:var(--rose);
+  border-color:var(--rose);
+  color:#fff;
+}
+.music-btn svg{ flex:0 0 auto; }
+
+/* ---------- main + screens ---------- */
+main{
+  flex:1 1 auto;
+  display:flex;
+  flex-direction:column;
+}
+
+.screen{ display:none; }
+.screen.is-active{
+  display:flex;
+  flex-direction:column;
+  flex:1 1 auto;
+  animation:screenIn .5s ease both;
+}
+.screen__inner{
+  margin:auto 0;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  padding:10px 0 22px;
+}
+.screen__inner--letter{ align-items:stretch; text-align:left; }
+
+@keyframes screenIn{
+  from{ opacity:0; transform:translateY(10px); }
+  to{ opacity:1; transform:none; }
+}
+
+/* ---------- footer ---------- */
+.foot{
+  flex:0 0 auto;
+  padding-top:14px;
+  text-align:center;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:.8125rem;
+  color:rgba(110,78,87,.62);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  max-width:340px;
+  min-height:50px;
+  padding:.85rem 1.5rem;
+  border-radius:999px;
+  border:1px solid transparent;
+  font-family:var(--sans);
+  font-size:1rem;
+  font-weight:600;
+  letter-spacing:.01em;
+  cursor:pointer;
+  text-align:center;
+  -webkit-tap-highlight-color:transparent;
+  transition:background-color .18s ease, color .18s ease, border-color .18s ease,
+             box-shadow .18s ease, transform .18s ease;
+}
+.btn:active{ transform:scale(.98); }
+
+.btn--primary{
+  background:var(--rose);
+  color:#fff;
+  box-shadow:0 10px 22px -12px rgba(168,90,115,.9);
+}
+.btn--primary:hover{ background:var(--rose-dark); transform:translateY(-1px); }
+
+.btn--ghost{
+  background:rgba(255,255,255,.65);
+  color:var(--rose-dark);
+  border-color:var(--line);
+}
+.btn--ghost:hover{ background:#fff; border-color:var(--pink-300); }
+
+/* =========================================================
+   SCREEN 1 — INTRO
+   ========================================================= */
+.cake-wrap{
+  position:relative;
+  display:inline-block;
+  margin-bottom:clamp(14px,3.5vw,22px);
+}
+.cake{
+  display:block;
+  width:clamp(168px,56vw,250px);
+  height:auto;
+}
+.sparkle{
+  position:absolute;
+  color:var(--pink-300);
+  font-size:11px;
+  line-height:1;
+  opacity:.55;
+  pointer-events:none;
+  animation:twinkle 4.2s ease-in-out infinite;
+}
+.sparkle--a{ top:2%; left:-7%; animation-delay:0s; }
+.sparkle--b{ top:14%; right:-6%; animation-delay:1.4s; }
+.sparkle--c{ bottom:16%; left:-4%; animation-delay:2.6s; }
+
+@keyframes twinkle{
+  0%,100%{ opacity:.2; transform:scale(.85); }
+  50%    { opacity:.8; transform:scale(1.1); }
+}
+
+/* candle flames */
+.flame{
+  transform-box:fill-box;
+  transform-origin:50% 100%;
+  animation:flicker 1.9s ease-in-out infinite;
+}
+.flame--2{ animation-delay:.35s; }
+.flame--3{ animation-delay:.7s; }
+
+@keyframes flicker{
+  0%,100%{ transform:scale(1) rotate(0deg); opacity:1; }
+  35%    { transform:scale(1.08,.92) rotate(-2deg); opacity:.94; }
+  70%    { transform:scale(.94,1.06) rotate(2deg); opacity:1; }
+}
+
+.intro__title{
+  margin:0 0 .55em;
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:clamp(1.85rem,8vw,3rem);
+  line-height:1.1;
+  letter-spacing:-.015em;
+  color:var(--ink);
+  overflow-wrap:break-word;
+}
+.intro__sub{
+  max-width:34ch;
+  margin:0 0 clamp(20px,5vw,30px);
+  font-size:clamp(1rem,4.2vw,1.125rem);
+  line-height:1.65;
+  color:var(--ink-soft);
+}
+.heart{ color:var(--pink-300); }
+
+/* =========================================================
+   SCREEN 2 — ENVELOPE
+   ========================================================= */
+.env__title{
+  margin:0 0 4px;
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:clamp(1.65rem,7vw,2.5rem);
+  line-height:1.12;
+  letter-spacing:-.01em;
+  color:var(--ink);
+}
+
+.envelope-stage{
+  width:min(320px,100%);
+  margin:clamp(20px,5vw,30px) auto 0;
+  perspective:1000px;
+}
+
+.envelope{
+  position:relative;
+  width:100%;
+  aspect-ratio:3 / 2;
+  border-radius:12px;
+  background:#F0AEC3;
+  box-shadow:var(--shadow);
+  cursor:pointer;
+  transform-style:preserve-3d;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .28s ease;
+}
+.envelope:hover{ transform:translateY(-3px); }
+.envelope:active{ transform:translateY(-1px); }
+.envelope.is-open{ cursor:default; }
+.envelope.is-open:hover{ transform:none; }
+
+/* letter inside */
+.env-letter{
+  position:absolute;
+  left:7%; top:8%;
+  width:86%; height:78%;
+  display:grid;
+  place-items:center;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:6px;
+  color:var(--pink-300);
+  font-size:1.5rem;
+  box-shadow:0 -6px 16px -10px rgba(168,90,115,.8);
+  z-index:1;
+  transform:translateY(7%);
+  transition:transform .85s cubic-bezier(.22,.9,.24,1);
+}
+
+/* front pocket (V shape) */
+.env-front{
+  position:absolute;
+  inset:0;
+  border-radius:12px;
+  background:#F9CFDC;
+  clip-path:polygon(0 0, 50% 46%, 100% 0, 100% 100%, 0 100%);
+  z-index:2;
+}
+
+/* top flap */
+.env-flap{
+  position:absolute;
+  left:0; top:0;
+  width:100%; height:56%;
+  background:#F3B8CB;
+  clip-path:polygon(0 0, 100% 0, 50% 100%);
+  transform-origin:50% 0%;
+  transform:rotateX(0deg);
+  transition:transform .8s cubic-bezier(.5,0,.2,1), opacity .3s ease .55s;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+  z-index:3;
+}
+
+/* heart seal */
+.env-seal{
+  position:absolute;
+  left:50%; top:44%;
+  width:46px; height:46px;
+  margin:-23px 0 0 -23px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#E58FA9;
+  color:#fff;
+  font-size:1.3rem;
+  line-height:1;
+  box-shadow:0 6px 14px -8px rgba(140,60,85,.95);
+  pointer-events:none;
+  z-index:4;
+  transition:opacity .35s ease, transform .35s ease;
+}
+
+/* opened state */
+.envelope.is-open .env-flap{ transform:rotateX(-180deg); opacity:0; }
+.envelope.is-open .env-seal{ opacity:0; transform:scale(.55); }
+.envelope.is-open .env-letter{ transform:translateY(-46%); }
+
+/* envelope captions */
+.env__open-me{
+  margin:clamp(20px,5vw,26px) 0 0;
+  font-family:var(--sans);
+  font-size:.9375rem;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--rose-dark);
+}
+.env__hint{
+  margin:8px 0 clamp(22px,5vw,28px);
+  font-size:.9375rem;
+  color:var(--ink-soft);
+}
+
+/* =========================================================
+   SCREEN 3 — LETTER
+   ========================================================= */
+.letter{
+  position:relative;
+  width:100%;
+  max-width:520px;
+  margin:0 auto;
+  padding:clamp(26px,6.5vw,42px);
+  background-color:var(--paper);
+  background-image:radial-gradient(rgba(201,118,143,.075) 1px, transparent 1px);
+  background-size:18px 18px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  font-family:var(--serif);
+  font-size:clamp(1rem,2.6vw,1.0625rem);
+  line-height:1.85;
+  color:var(--ink);
+  overflow-wrap:break-word;
+}
+.letter p{ margin:0 0 1.1em; }
+.letter p:last-child{ margin-bottom:0; }
+.letter::before,
+.letter::after{
+  content:"♡";
+  position:absolute;
+  font-size:.85rem;
+  color:var(--pink-300);
+  opacity:.55;
+  pointer-events:none;
+}
+.letter::before{ top:12px; left:15px; }
+.letter::after{ bottom:12px; right:15px; }
+
+.letter__sign{
+  margin-top:1.7em;
+  font-style:italic;
+  color:var(--rose-dark);
+}
+
+/* optional photo */
+.photo{
+  width:100%;
+  max-width:270px;
+  margin:clamp(22px,5vw,30px) auto 0;
+  text-align:center;
+}
+.photo img{
+  display:block;
+  width:100%;
+  height:auto;
+  padding:7px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:var(--shadow-sm);
+}
+.photo figcaption{
+  margin-top:10px;
+  font-family:var(--sans);
+  font-size:.8125rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--rose);
+}
+
+/* letter actions */
+.letter-actions{
+  display:grid;
+  gap:12px;
+  justify-items:center;
+  max-width:520px;
+  margin:clamp(22px,5vw,30px) auto 0;
+}
+.letter-actions .btn{ max-width:340px; }
+
+@media (min-width:480px){
+  .letter-actions{ grid-auto-flow:column; justify-content:center; }
+}
+
+/* replay animation */
+.letter.replay{ animation:letterIn .8s cubic-bezier(.2,.75,.3,1) both; }
+@keyframes letterIn{
+  from{ opacity:0; transform:translateY(18px); }
+  to{ opacity:1; transform:none; }
+}
+
+/* =========================================================
+   MUSIC TOAST
+   ========================================================= */
+.music-help{
+  position:fixed;
+  left:50%;
+  bottom:16px;
+  transform:translateX(-50%);
+  width:max-content;
+  max-width:calc(100vw - 28px);
+  margin:0;
+  padding:11px 16px;
+  border-radius:12px;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  color:var(--ink-soft);
+  font-family:var(--sans);
+  font-size:.875rem;
+  line-height:1.5;
+  text-align:left;
+  z-index:60;
+}
+.music-help code{
+  font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  font-size:.9em;
+  padding:1px 5px;
+  border-radius:4px;
+  background:var(--pink-50);
+  color:var(--rose-dark);
+}
+
+/* =========================================================
+   RESPONSIVE TWEAKS
+   ========================================================= */
+@media (max-width:360px){
+  .brand{ font-size:.875rem; }
+  .music-btn{ padding:8px 12px; font-size:.75rem; }
+  .env__open-me{ font-size:.875rem; letter-spacing:.16em; }
+  .btn{ font-size:.9375rem; padding:.8rem 1.1rem; }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,
+  *::before,
+  *::after{
+    animation-duration:.001ms !important;
+    animation-delay:0ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    transition-delay:0ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ══════════ TOP BAR ══════════ -->
+  <header class="topbar">
+    <p class="brand">for Manasvi <span class="brand__heart" aria-hidden="true">♡</span></p>
+
+    <button type="button" class="music-btn" id="musicBtn"
+            aria-pressed="false" aria-label="Play background music">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+        <path d="M9 17.5V6.2l10-2v11.3" fill="none" stroke="currentColor"
+              stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="6.5" cy="17.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.7"/>
+        <circle cx="16.5" cy="15.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.7"/>
+      </svg>
+      <span id="musicLabel">Music</span>
+    </button>
+  </header>
+
+  <!-- music help toast -->
+  <p class="music-help" id="musicHelp" role="status" hidden>
+    No music file found. Add <code>birthday-music.mp3</code> next to this page, then reload.
+  </p>
+
+  <!-- ══════════ SCREENS ══════════ -->
+  <main>
+
+    <!-- ---------- SCREEN 1 : INTRO ---------- -->
+    <section class="screen is-active" id="screen-intro" aria-labelledby="introTitle">
+      <div class="screen__inner">
+
+        <div class="cake-wrap">
+          <span class="sparkle sparkle--a" aria-hidden="true">✦</span>
+          <span class="sparkle sparkle--b" aria-hidden="true">✧</span>
+          <span class="sparkle sparkle--c" aria-hidden="true">✦</span>
+
+          <svg class="cake" viewBox="0 0 220 200" role="img"
+               aria-label="A pink birthday cake with three lit candles">
+            <!-- plate -->
+            <ellipse cx="110" cy="177" rx="86" ry="10" fill="#F2D6DF"/>
+            <ellipse cx="110" cy="174" rx="72" ry="7" fill="#FBE7EE"/>
+
+            <!-- bottom tier -->
+            <rect x="38" y="124" width="144" height="48" rx="12" fill="#F2AEC5"/>
+
+            <!-- bottom tier frosting -->
+            <path d="M38 124 q12 14 24 0 q12 14 24 0 q12 14 24 0 q12 14 24 0 q12 14 24 0 q12 14 24 0
+                     L182 110 a12 12 0 0 0 -12 -12 H50 a12 12 0 0 0 -12 12 Z"
+                  fill="#FFF3F7"/>
+
+            <!-- top tier -->
+            <rect x="66" y="84" width="88" height="36" rx="10" fill="#FBD1DE"/>
+
+            <!-- top tier frosting -->
+            <path d="M66 84 q11 12 22 0 q11 12 22 0 q11 12 22 0 q11 12 22 0
+                     L154 72 a10 10 0 0 0 -10 -10 H76 a10 10 0 0 0 -10 10 Z"
+                  fill="#FFF9FB"/>
+
+            <!-- candles -->
+            <rect x="88"  y="36" width="8" height="32" rx="4" fill="#E58FA9"/>
+            <rect x="106" y="36" width="8" height="32" rx="4" fill="#F4B3C8"/>
+            <rect x="124" y="36" width="8" height="32" rx="4" fill="#E58FA9"/>
+
+            <!-- wicks -->
+            <rect x="91.3"  y="32" width="1.4" height="5" rx="0.7" fill="#8B5A6B"/>
+            <rect x="109.3" y="32" width="1.4" height="5" rx="0.7" fill="#8B5A6B"/>
+            <rect x="127.3" y="32" width="1.4" height="5" rx="0.7" fill="#8B5A6B"/>
+
+            <!-- flames -->
+            <g class="flame flame--1">
+              <ellipse cx="92" cy="25" rx="5" ry="8.5" fill="#F6B36A"/>
+              <ellipse cx="92" cy="27" rx="2.4" ry="4.6" fill="#FFE2B4"/>
+            </g>
+            <g class="flame flame--2">
+              <ellipse cx="110" cy="25" rx="5" ry="8.5" fill="#F6B36A"/>
+              <ellipse cx="110" cy="27" rx="2.4" ry="4.6" fill="#FFE2B4"/>
+            </g>
+            <g class="flame flame--3">
+              <ellipse cx="128" cy="25" rx="5" ry="8.5" fill="#F6B36A"/>
+              <ellipse cx="128" cy="27" rx="2.4" ry="4.6" fill="#FFE2B4"/>
+            </g>
+          </svg>
+        </div>
+
+        <h1 class="intro__title" id="introTitle" tabindex="-1">Happy Birthday, Manasvi!</h1>
+
+        <p class="intro__sub">
+          A little pink, a little cake, and a small surprise waiting for you.
+          <span class="heart" aria-hidden="true">♡</span>
+        </p>
+
+        <button type="button" class="btn btn--primary" id="btnToEnvelope">
+          There's something for you →
+        </button>
+
+      </div>
+    </section>
+
+    <!-- ---------- SCREEN 2 : ENVELOPE ---------- -->
+    <section class="screen" id="screen-envelope" aria-labelledby="envTitle">
+      <div class="screen__inner">
+
+        <h2 class="env__title" id="envTitle" tabindex="-1">Delivery for you!</h2>
+
+        <div class="envelope-stage">
+          <div class="envelope" id="envelope" role="button" tabindex="0"
+               aria-expanded="false" aria-label="Open the envelope to read your letter">
+
+            <div class="env-letter" aria-hidden="true"><span>♡</span></div>
+            <div class="env-front" aria-hidden="true"></div>
+            <div class="env-flap" aria-hidden="true"></div>
+            <div class="env-seal" aria-hidden="true">♡</div>
+
+          </div>
+        </div>
+
+        <p class="env__open-me">OPEN ME, BY ANUSHA ♡</p>
+        <p class="env__hint">Tap the envelope to open it</p>
+
+        <button type="button" class="btn btn--ghost" id="btnSkip">
+          Skip to the letter
+        </button>
+
+      </div>
+    </section>
+
+    <!-- ---------- SCREEN 3 : LETTER ---------- -->
+    <section class="screen" id="screen-letter" aria-labelledby="letterTitle">
+      <div class="screen__inner screen__inner--letter">
+
+        <div class="letter" id="letterCard">
+          <h2 class="sr-only" id="letterTitle" tabindex="-1">Your birthday letter</h2>
+
+          <p>Happy birthday, Manasvi!! ♡</p>
+
+          <p>It's crazy how we went from talking about everything on the bus to barely
+             catching up now.</p>
+
+          <p>I still miss those fun days! I hope this year brings you lots of happiness,
+             laughter, and amazing memories. We seriously need to catch up sometime!!</p>
+
+          <p>Stay happy, keep being you, and have an amazing year ahead.</p>
+
+          <p class="letter__sign">Your bus friend,<br>Anusha ♡</p>
+        </div>
+
+        <!-- OPTIONAL PHOTO (hidden unless SHOW_PHOTO is true) -->
+        <figure class="photo" id="photoSection" hidden>
+          <img id="memoryPhoto" alt="A photo of Manasvi" decoding="async">
+          <figcaption>♡ memory ♡</figcaption>
+        </figure>
+
+        <div class="letter-actions">
+          <button type="button" class="btn btn--ghost" id="btnBack">Back to the envelope</button>
+          <button type="button" class="btn btn--primary" id="btnAgain">Read it again ♡</button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">made with care ♡</footer>
+
+</div>
+
+<!-- optional local music (never autoplays) -->
+<audio id="music" src="birthday-music.mp3" loop preload="auto"></audio>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ══════════════════════════════════════════════════════════
+     CONFIG — the only lines you might want to change
+     ══════════════════════════════════════════════════════════ */
+
+  /* OPTIONAL PHOTO
+     ─────────────────────────────────────────────────────────
+     Put a file named  memory-photo.jpg  in the same folder as
+     this index.html, then change  false  to  true  below.
+     Leave it false and the photo section stays hidden.        */
+  var SHOW_PHOTO = false;
+
+  /* ══════════════════════════════════════════════════════════ */
+
+  var PHOTO_FILE = 'memory-photo.jpg';
+
+  var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function motionOK() { return !motionQuery.matches; }
+
+  /* ---------------------------------------------------------
+     SCREENS
+     --------------------------------------------------------- */
+  var screens = {
+    intro:    document.getElementById('screen-intro'),
+    envelope: document.getElementById('screen-envelope'),
+    letter:   document.getElementById('screen-letter')
+  };
+
+  var headings = {
+    intro:    document.getElementById('introTitle'),
+    envelope: document.getElementById('envTitle'),
+    letter:   document.getElementById('letterTitle')
+  };
+
+  function showScreen(name) {
+    Object.keys(screens).forEach(function (key) {
+      screens[key].classList.toggle('is-active', key === name);
+    });
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: motionOK() ? 'smooth' : 'auto'
+    });
+
+    var h = headings[name];
+    if (h) {
+      try { h.focus({ preventScroll: true }); }
+      catch (err) { h.focus(); }
+    }
+  }
+
+  /* ---------------------------------------------------------
+     ENVELOPE
+     --------------------------------------------------------- */
+  var envelope   = document.getElementById('envelope');
+  var openTimer  = null;
+  var isOpen     = false;
+
+  function openEnvelope() {
+    if (isOpen) { return; }
+    isOpen = true;
+
+    envelope.classList.add('is-open');
+    envelope.setAttribute('aria-expanded', 'true');
+
+    openTimer = window.setTimeout(function () {
+      openTimer = null;
+      showScreen('letter');
+    }, motionOK() ? 1600 : 420);
+  }
+
+  function resetEnvelope() {
+    if (openTimer) {
+      window.clearTimeout(openTimer);
+      openTimer = null;
+    }
+    isOpen = false;
+    envelope.classList.remove('is-open');
+    envelope.setAttribute('aria-expanded', 'false');
+  }
+
+  envelope.addEventListener('click', openEnvelope);
+
+  envelope.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      openEnvelope();
+    }
+  });
+
+  /* ---------------------------------------------------------
+     NAVIGATION BUTTONS
+     --------------------------------------------------------- */
+  document.getElementById('btnToEnvelope').addEventListener('click', function () {
+    showScreen('envelope');
+  });
+
+  document.getElementById('btnSkip').addEventListener('click', function () {
+    resetEnvelope();
+    showScreen('letter');
+  });
+
+  document.getElementById('btnBack').addEventListener('click', function () {
+    resetEnvelope();
+    showScreen('envelope');
+  });
+
+  /* "Read it again ♡" — replays the letter entrance animation */
+  var letterCard = document.getElementById('letterCard');
+
+  document.getElementById('btnAgain').addEventListener('click', function () {
+    letterCard.classList.remove('replay');
+    void letterCard.offsetWidth;          /* force reflow so the animation restarts */
+    letterCard.classList.add('replay');
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: motionOK() ? 'smooth' : 'auto'
+    });
+
+    var h = document.getElementById('letterTitle');
+    try { h.focus({ preventScroll: true }); }
+    catch (err) { h.focus(); }
+  });
+
+  /* ---------------------------------------------------------
+     MUSIC
+     --------------------------------------------------------- */
+  var audio      = document.getElementById('music');
+  var musicBtn   = document.getElementById('musicBtn');
+  var musicLabel = document.getElementById('musicLabel');
+  var musicHelp  = document.getElementById('musicHelp');
+  var helpTimer  = null;
+  var musicBroken = false;
+
+  function setMusicUI(playing) {
+    musicBtn.classList.toggle('is-playing', playing);
+    musicBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    musicBtn.setAttribute('aria-label', playing ? 'Pause background music' : 'Play background music');
+    musicLabel.textContent = playing ? 'Pause' : 'Music';
+  }
+
+  function showMusicHelp() {
+    musicHelp.hidden = false;
+    if (helpTimer) { window.clearTimeout(helpTimer); }
+    helpTimer = window.setTimeout(function () {
+      musicHelp.hidden = true;
+      helpTimer = null;
+    }, 9000);
+  }
+
+  musicBtn.addEventListener('click', function () {
+    if (musicBroken) {
+      showMusicHelp();
+      return;
+    }
+
+    if (audio.paused) {
+      var promise = audio.play();
+
+      /* Older browsers return undefined — that's fine. */
+      if (promise && typeof promise.catch === 'function') {
+        promise.catch(function () {
+          musicBroken = true;
+          setMusicUI(false);
+          showMusicHelp();
+        });
+      }
+    } else {
+      audio.pause();
+    }
+  });
+
+  audio.addEventListener('play', function () {
+    setMusicUI(true);
+    musicHelp.hidden = true;
+  });
+
+  audio.addEventListener('pause', function () {
+    setMusicUI(false);
+  });
+
+  audio.addEventListener('error', function () {
+    musicBroken = true;
+    setMusicUI(false);
+    showMusicHelp();
+  });
+
+  /* ---------------------------------------------------------
+     OPTIONAL PHOTO
+     --------------------------------------------------------- */
+  if (SHOW_PHOTO) {
+    var photoSection = document.getElementById('photoSection');
+    var photoImg     = document.getElementById('memoryPhoto');
+
+    photoImg.addEventListener('error', function () {
+      photoSection.hidden = true;   /* stays hidden if the file is missing */
+    });
+
+    photoImg.src = PHOTO_FILE;
+    photoSection.hidden = false;
+  }
+
+  /* ---------------------------------------------------------
+     BOOT & AUTOPLAY
+     --------------------------------------------------------- */
+  setMusicUI(false);
+
+  // 1. Try to play immediately when the page loads
+  var playPromise = audio.play();
+
+  if (playPromise !== undefined) {
+    playPromise.then(function() {
+      // Autoplay started successfully! (Happens if they visited before)
+      setMusicUI(true);
+    }).catch(function(error) {
+      // Autoplay was blocked by the browser.
+      // We will start the music on the very first click anywhere on the page.
+      console.log("Autoplay blocked by browser. Waiting for first click...");
+      
+      function startMusicOnFirstInteraction() {
+        if (audio.paused) {
+          audio.play().then(function() {
+            setMusicUI(true);
+            // Remove the listeners so it doesn't keep triggering
+            document.removeEventListener('click', startMusicOnFirstInteraction);
+            document.removeEventListener('touchstart', startMusicOnFirstInteraction);
+          }).catch(function(){});
+        }
+      }
+
+      // Listen for a click or touch anywhere on the website
+      document.addEventListener('click', startMusicOnFirstInteraction);
+      document.addEventListener('touchstart', startMusicOnFirstInteraction);
+    });
+  }
+  setMusicUI(false);
+})();
+</script>
+</body>
+</html>
