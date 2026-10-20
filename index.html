@@ -919,38 +919,37 @@ main{
   }
 
   /* ---------------------------------------------------------
-     BOOT & AUTOPLAY
+     BOOT & AUTOPLAY FALLBACK
      --------------------------------------------------------- */
   setMusicUI(false);
 
-  // 1. Try to play immediately when the page loads
+  // Try to play immediately when the page loads
   var playPromise = audio.play();
 
   if (playPromise !== undefined) {
     playPromise.then(function() {
-      // Autoplay started successfully! (Happens if they visited before)
-      setMusicUI(true);
+      setMusicUI(true); // It worked!
     }).catch(function(error) {
-      // Autoplay was blocked by the browser.
-      // We will start the music on the very first click anywhere on the page.
-      console.log("Autoplay blocked by browser. Waiting for first click...");
+      // It was blocked by the browser. Let's wait for her first tap.
+      console.log("Autoplay blocked. Waiting for first interaction...");
       
       function startMusicOnFirstInteraction() {
         if (audio.paused) {
           audio.play().then(function() {
             setMusicUI(true);
-            // Remove the listeners so it doesn't keep triggering
+            // Remove the listeners so it doesn't restart if she clicks again
             document.removeEventListener('click', startMusicOnFirstInteraction);
             document.removeEventListener('touchstart', startMusicOnFirstInteraction);
           }).catch(function(){});
         }
       }
 
-      // Listen for a click or touch anywhere on the website
+      // Listen for a click or tap anywhere on the page
       document.addEventListener('click', startMusicOnFirstInteraction);
       document.addEventListener('touchstart', startMusicOnFirstInteraction);
     });
   }
+})();
   setMusicUI(false);
 })();
 </script>
