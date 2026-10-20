@@ -579,37 +579,22 @@ main{
 
           <svg class="cake" viewBox="0 0 220 200" role="img"
                aria-label="A pink birthday cake with three lit candles">
-            <!-- plate -->
             <ellipse cx="110" cy="177" rx="86" ry="10" fill="#F2D6DF"/>
             <ellipse cx="110" cy="174" rx="72" ry="7" fill="#FBE7EE"/>
-
-            <!-- bottom tier -->
             <rect x="38" y="124" width="144" height="48" rx="12" fill="#F2AEC5"/>
-
-            <!-- bottom tier frosting -->
             <path d="M38 124 q12 14 24 0 q12 14 24 0 q12 14 24 0 q12 14 24 0 q12 14 24 0 q12 14 24 0
                      L182 110 a12 12 0 0 0 -12 -12 H50 a12 12 0 0 0 -12 12 Z"
                   fill="#FFF3F7"/>
-
-            <!-- top tier -->
             <rect x="66" y="84" width="88" height="36" rx="10" fill="#FBD1DE"/>
-
-            <!-- top tier frosting -->
             <path d="M66 84 q11 12 22 0 q11 12 22 0 q11 12 22 0 q11 12 22 0
                      L154 72 a10 10 0 0 0 -10 -10 H76 a10 10 0 0 0 -10 10 Z"
                   fill="#FFF9FB"/>
-
-            <!-- candles -->
             <rect x="88"  y="36" width="8" height="32" rx="4" fill="#E58FA9"/>
             <rect x="106" y="36" width="8" height="32" rx="4" fill="#F4B3C8"/>
             <rect x="124" y="36" width="8" height="32" rx="4" fill="#E58FA9"/>
-
-            <!-- wicks -->
             <rect x="91.3"  y="32" width="1.4" height="5" rx="0.7" fill="#8B5A6B"/>
             <rect x="109.3" y="32" width="1.4" height="5" rx="0.7" fill="#8B5A6B"/>
             <rect x="127.3" y="32" width="1.4" height="5" rx="0.7" fill="#8B5A6B"/>
-
-            <!-- flames -->
             <g class="flame flame--1">
               <ellipse cx="92" cy="25" rx="5" ry="8.5" fill="#F6B36A"/>
               <ellipse cx="92" cy="27" rx="2.4" ry="4.6" fill="#FFE2B4"/>
@@ -657,7 +642,7 @@ main{
           </div>
         </div>
 
-        <p class="env__open-me">OPEN ME, BY ANUSHA ♡</p>
+        <p class="env__open-me">OPEN ME, MY ANUSH ♡</p>
         <p class="env__hint">Tap the envelope to open it</p>
 
         <button type="button" class="btn btn--ghost" id="btnSkip">
@@ -687,7 +672,7 @@ main{
           <p class="letter__sign">Your bus friend,<br>Anusha ♡</p>
         </div>
 
-        <!-- OPTIONAL PHOTO (hidden unless SHOW_PHOTO is true) -->
+        <!-- OPTIONAL PHOTO -->
         <figure class="photo" id="photoSection" hidden>
           <img id="memoryPhoto" alt="A photo of Manasvi" decoding="async">
           <figcaption>♡ memory ♡</figcaption>
@@ -714,27 +699,10 @@ main{
 (function () {
   'use strict';
 
-  /* ══════════════════════════════════════════════════════════
-     CONFIG — the only lines you might want to change
-     ══════════════════════════════════════════════════════════ */
-
-  /* OPTIONAL PHOTO
-     ─────────────────────────────────────────────────────────
-     Put a file named  memory-photo.jpg  in the same folder as
-     this index.html, then change  false  to  true  below.
-     Leave it false and the photo section stays hidden.        */
-  var SHOW_PHOTO = false;
-
-  /* ══════════════════════════════════════════════════════════ */
-
-  var PHOTO_FILE = 'memory-photo.jpg';
-
   var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   function motionOK() { return !motionQuery.matches; }
 
-  /* ---------------------------------------------------------
-     SCREENS
-     --------------------------------------------------------- */
+  /* SCREENS */
   var screens = {
     intro:    document.getElementById('screen-intro'),
     envelope: document.getElementById('screen-envelope'),
@@ -751,206 +719,85 @@ main{
     Object.keys(screens).forEach(function (key) {
       screens[key].classList.toggle('is-active', key === name);
     });
-
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: motionOK() ? 'smooth' : 'auto'
-    });
-
+    window.scrollTo({ top: 0, left: 0, behavior: motionOK() ? 'smooth' : 'auto' });
     var h = headings[name];
-    if (h) {
-      try { h.focus({ preventScroll: true }); }
-      catch (err) { h.focus(); }
-    }
+    if (h) { try { h.focus({ preventScroll: true }); } catch (err) { h.focus(); } }
   }
 
-  /* ---------------------------------------------------------
-     ENVELOPE
-     --------------------------------------------------------- */
-  var envelope   = document.getElementById('envelope');
-  var openTimer  = null;
-  var isOpen     = false;
-
-  function openEnvelope() {
-    if (isOpen) { return; }
-    isOpen = true;
-
-    envelope.classList.add('is-open');
-    envelope.setAttribute('aria-expanded', 'true');
-
-    openTimer = window.setTimeout(function () {
-      openTimer = null;
-      showScreen('letter');
-    }, motionOK() ? 1600 : 420);
-  }
-
-  function resetEnvelope() {
-    if (openTimer) {
-      window.clearTimeout(openTimer);
-      openTimer = null;
-    }
-    isOpen = false;
-    envelope.classList.remove('is-open');
-    envelope.setAttribute('aria-expanded', 'false');
-  }
-
-  envelope.addEventListener('click', openEnvelope);
-
-  envelope.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-      e.preventDefault();
-      openEnvelope();
-    }
-  });
-
-  /* ---------------------------------------------------------
-     NAVIGATION BUTTONS
-     --------------------------------------------------------- */
-  document.getElementById('btnToEnvelope').addEventListener('click', function () {
-    showScreen('envelope');
-  });
-
-  document.getElementById('btnSkip').addEventListener('click', function () {
-    resetEnvelope();
-    showScreen('letter');
-  });
-
-  document.getElementById('btnBack').addEventListener('click', function () {
-    resetEnvelope();
-    showScreen('envelope');
-  });
-
-  /* "Read it again ♡" — replays the letter entrance animation */
-  var letterCard = document.getElementById('letterCard');
-
-  document.getElementById('btnAgain').addEventListener('click', function () {
-    letterCard.classList.remove('replay');
-    void letterCard.offsetWidth;          /* force reflow so the animation restarts */
-    letterCard.classList.add('replay');
-
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: motionOK() ? 'smooth' : 'auto'
-    });
-
-    var h = document.getElementById('letterTitle');
-    try { h.focus({ preventScroll: true }); }
-    catch (err) { h.focus(); }
-  });
-
-  /* ---------------------------------------------------------
-     MUSIC
-     --------------------------------------------------------- */
+  /* MUSIC */
   var audio      = document.getElementById('music');
   var musicBtn   = document.getElementById('musicBtn');
   var musicLabel = document.getElementById('musicLabel');
-  var musicHelp  = document.getElementById('musicHelp');
-  var helpTimer  = null;
-  var musicBroken = false;
 
   function setMusicUI(playing) {
     musicBtn.classList.toggle('is-playing', playing);
     musicBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
-    musicBtn.setAttribute('aria-label', playing ? 'Pause background music' : 'Play background music');
     musicLabel.textContent = playing ? 'Pause' : 'Music';
   }
 
-  function showMusicHelp() {
-    musicHelp.hidden = false;
-    if (helpTimer) { window.clearTimeout(helpTimer); }
-    helpTimer = window.setTimeout(function () {
-      musicHelp.hidden = true;
-      helpTimer = null;
-    }, 9000);
-  }
-
+  // Play/Pause button logic
   musicBtn.addEventListener('click', function () {
-    if (musicBroken) {
-      showMusicHelp();
-      return;
-    }
-
     if (audio.paused) {
-      var promise = audio.play();
-
-      /* Older browsers return undefined — that's fine. */
-      if (promise && typeof promise.catch === 'function') {
-        promise.catch(function () {
-          musicBroken = true;
-          setMusicUI(false);
-          showMusicHelp();
-        });
-      }
+      audio.play().then(function() { setMusicUI(true); }).catch(function(){});
     } else {
       audio.pause();
     }
   });
 
-  audio.addEventListener('play', function () {
-    setMusicUI(true);
-    musicHelp.hidden = true;
+  audio.addEventListener('play', function () { setMusicUI(true); });
+  audio.addEventListener('pause', function () { setMusicUI(false); });
+
+  /* NAVIGATION BUTTONS */
+  
+  // 1. Intro to Envelope (Plays music here on first tap)
+  document.getElementById('btnToEnvelope').addEventListener('click', function () {
+    if (audio.paused) {
+      audio.play().then(function() { setMusicUI(true); }).catch(function(){});
+    }
+    showScreen('envelope');
   });
 
-  audio.addEventListener('pause', function () {
-    setMusicUI(false);
+  // 2. Skip button
+  document.getElementById('btnSkip').addEventListener('click', function () {
+    showScreen('letter');
   });
 
-  audio.addEventListener('error', function () {
-    musicBroken = true;
-    setMusicUI(false);
-    showMusicHelp();
+  // 3. Back button
+  document.getElementById('btnBack').addEventListener('click', function () {
+    showScreen('envelope');
   });
 
-  /* ---------------------------------------------------------
-     OPTIONAL PHOTO
-     --------------------------------------------------------- */
-  if (SHOW_PHOTO) {
-    var photoSection = document.getElementById('photoSection');
-    var photoImg     = document.getElementById('memoryPhoto');
+  // 4. Replay button
+  document.getElementById('btnAgain').addEventListener('click', function () {
+    var letterCard = document.getElementById('letterCard');
+    letterCard.classList.remove('replay');
+    void letterCard.offsetWidth;
+    letterCard.classList.add('replay');
+    window.scrollTo({ top: 0, behavior: motionOK() ? 'smooth' : 'auto' });
+  });
 
-    photoImg.addEventListener('error', function () {
-      photoSection.hidden = true;   /* stays hidden if the file is missing */
-    });
+  /* ENVELOPE ANIMATION */
+  var envelope = document.getElementById('envelope');
+  var isOpen = false;
 
-    photoImg.src = PHOTO_FILE;
-    photoSection.hidden = false;
-  }
+  envelope.addEventListener('click', function () {
+    if (isOpen) return;
+    isOpen = true;
+    envelope.classList.add('is-open');
+    setTimeout(function () {
+      showScreen('letter');
+      isOpen = false; 
+      envelope.classList.remove('is-open');
+    }, motionOK() ? 1600 : 420);
+  });
 
-  /* ---------------------------------------------------------
-     BOOT & AUTOPLAY FALLBACK
-     --------------------------------------------------------- */
-  setMusicUI(false);
+  envelope.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      envelope.click();
+    }
+  });
 
-  // Try to play immediately when the page loads
-  var playPromise = audio.play();
-
-  if (playPromise !== undefined) {
-    playPromise.then(function() {
-      setMusicUI(true); // It worked!
-    }).catch(function(error) {
-      // It was blocked by the browser. Let's wait for her first tap.
-      console.log("Autoplay blocked. Waiting for first interaction...");
-      
-      function startMusicOnFirstInteraction() {
-        if (audio.paused) {
-          audio.play().then(function() {
-            setMusicUI(true);
-            // Remove the listeners so it doesn't restart if she clicks again
-            document.removeEventListener('click', startMusicOnFirstInteraction);
-            document.removeEventListener('touchstart', startMusicOnFirstInteraction);
-          }).catch(function(){});
-        }
-      }
-
-      // Listen for a click or tap anywhere on the page
-      document.addEventListener('click', startMusicOnFirstInteraction);
-      document.addEventListener('touchstart', startMusicOnFirstInteraction);
-    });
-  }
-})();
-  setMusicUI(false);
 })();
 </script>
 </body>
